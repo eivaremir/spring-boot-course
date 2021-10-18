@@ -1,6 +1,7 @@
 package com.in28minutes.unittesting.unittesting.business;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 import static org.mockito.Mockito.*;
@@ -39,7 +40,6 @@ public class ListMockTest {
         //verify if the get method is being called
         verify(mock).get(0);
 
-
         // verify if the method was called once
         verify(mock,times(2)).get(anyInt());
 
@@ -47,4 +47,30 @@ public class ListMockTest {
 
         verify(mock,never()).get(2);
     }
+
+    @Test
+    public void argumentCapturing(){
+        mock.add("SomeString");
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+
+        // capture de argument
+        verify(mock).add(captor.capture());
+
+        assertEquals("SomeString",captor.getValue());
+    }
+    @Test
+    public void multipleArgumentCapturing(){
+        mock.add("SomeString");
+        mock.add("SomeString2");
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+
+        // capture de argument
+        verify(mock).add(captor.capture());
+
+        assertEquals("SomeString",captor.getAllValues().get(0));
+        assertEquals("SomeString2",captor.getAllValues().get(1));
+    }
+
 }
