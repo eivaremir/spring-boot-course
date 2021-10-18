@@ -2,19 +2,27 @@ package com.in28minutes.unittesting.unittesting.business;
 
 import com.in28minutes.unittesting.unittesting.data.SomeDataService;
 import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-
+@ExtendWith(MockitoExtension.class)
 public class BusinessMockTest {
-    BusinessImpl business = new BusinessImpl();
-    SomeDataService dsMock = mock(SomeDataService.class);
-    @Before
-    public void before(){
-        business.setDs(dsMock);
-    }
+
+
+    @InjectMocks
+    BusinessImpl business;
+
+    @Mock
+    SomeDataService dsMock ;
 
     @Test
     public void testUsingDataService_basic(){
