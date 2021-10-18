@@ -6,7 +6,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ListMockTest {
-    List mock = mock(List.class);
+    List<String> mock = mock(List.class);
 
     @Test
     public void size_basic(){
@@ -31,5 +31,20 @@ public class ListMockTest {
         when(mock.get(anyInt())).thenReturn("a string");
         assertEquals("a string",mock.get(0));
         assertEquals("a string",mock.get(1));
+    }
+    @Test
+    public void verificationBasics(){
+        String value = mock.get(0);
+        String value2 = mock.get(1);
+        //verify if the get method is being called
+        verify(mock).get(0);
+
+
+        // verify if the method was called once
+        verify(mock,times(2)).get(anyInt());
+
+        verify(mock,atLeast(1)).get(anyInt());
+
+        verify(mock,never()).get(2);
     }
 }
