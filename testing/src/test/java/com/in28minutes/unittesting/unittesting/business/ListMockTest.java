@@ -3,6 +3,7 @@ package com.in28minutes.unittesting.unittesting.business;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,5 +73,18 @@ public class ListMockTest {
         assertEquals("SomeString",captor.getAllValues().get(0));
         assertEquals("SomeString2",captor.getAllValues().get(1));
     }
+    @Test
+    public void spying(){
+        ArrayList arrayListSpy = spy(ArrayList.class);
 
+        // this returns an exception and not null --> arrayListSpy.get(0);
+        arrayListSpy.add("Test0");
+        arrayListSpy.get(0); // now it doesnt
+
+        when(arrayListSpy.size()).thenReturn(5);
+        arrayListSpy.add("Test0");
+        System.out.println(arrayListSpy.size()); // still 5, "when" overrides the value
+
+        verify(arrayListSpy,times(2)).add("Test0"); //verify if add test0 was executed twice
+    }
 }
