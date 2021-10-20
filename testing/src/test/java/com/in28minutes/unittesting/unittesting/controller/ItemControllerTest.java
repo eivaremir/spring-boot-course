@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,6 +55,20 @@ public class ItemControllerTest {
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\":  1,\"price\":100,\"qty\":100}")) // this still succeeds
+                .andReturn();
+    }
+    @Test
+    public void retrieveAllItems_basic() throws Exception {
+
+        // this make the UT independendent of the service
+        when(businessService.retrieveAllItems()).thenReturn(
+                Arrays.asList(new Item(2,"item2",100,100),new Item(3,"item2",100,100))
+        );
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/all-items-from-database").accept(MediaType.APPLICATION_JSON );
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{id:2,price:100,qty:100},{id:3,price:100,qty:100}]")) // this still succeeds
                 .andReturn();
     }
 }
