@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations ={"classpath:test-configuration.properties"}) // use a particular application.properties
 public class ItemRepositoryIT {
 
     @Autowired
